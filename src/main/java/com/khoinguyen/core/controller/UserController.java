@@ -1,54 +1,73 @@
 package com.khoinguyen.core.controller;
 
-import com.khoinguyen.core.dto.response.ResponseSuccess;
+import com.khoinguyen.core.dto.response.ResponseData;
+import com.khoinguyen.core.dto.response.ResponseError;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.khoinguyen.core.dto.request.UserRequestDto;
 
-import jakarta.validation.Valid;
-
-import org.springframework.http.ResponseEntity;
-
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    
+
     @PostMapping("/")
-    public ResponseSuccess addUser(@RequestBody @Valid UserRequestDto requestDto) {
-        return new ResponseSuccess(HttpStatus.CREATED, "User added successfully", 1);
+    public ResponseData<Integer> addUser(@RequestBody @Valid UserRequestDto requestDto) {
+        return ResponseData.<Integer>builder()
+                .status(HttpStatus.CREATED.value())
+                .message("User added successfully")
+                .data(1)
+                .build();
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseSuccess updateUser(@PathVariable int id, @RequestBody UserRequestDto requestDto) {
-        return new ResponseSuccess(HttpStatus.CREATED, "User updated successfully");
+    public ResponseData<?> updateUser(@PathVariable int id, @RequestBody UserRequestDto requestDto) {
+        return ResponseData.<Void>builder()
+                .status(HttpStatus.ACCEPTED.value())
+                .message("User updated successfully")
+                .build();
     }
 
     @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String changeStatus(@PathVariable int id, @RequestParam boolean status) {
-        return "User changed "+status+" with user id: "+id;
+    public ResponseData<?> changeStatus(@PathVariable int id, @RequestParam boolean status) {
+        return ResponseData.<Void>builder()
+                .status(HttpStatus.ACCEPTED.value())
+                .message("User changed " + status + " with user id: " + id)
+                .build();
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteUser(@PathVariable @Min(1) int id) {
-        return "delete user with id = "+id;
+    public ResponseData<?> deleteUser(@PathVariable @Min(1) int id) {
+        if(id == 1) {
+            return ResponseError.<Void>builder()
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .message("User not found")
+                    .build();
+        }
+        return ResponseData.<Void>builder()
+                .status(HttpStatus.NO_CONTENT.value())
+                .message("delete user with id = " + id)
+                .build();
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String getUserById(@PathVariable int id) {
-        return "Get user with id: "+ id;
+    public ResponseData<?> getUserById(@PathVariable int id) {
+        return ResponseData.<String>builder()
+                .status(HttpStatus.OK.value())
+                .message("Get successfully")
+                .data("Get user with id: " + id)
+                .build();
     }
-    
+
 
     @GetMapping("/list")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getALlUsers() {
-        return ResponseEntity.ok("success");
+    public ResponseData<?> getALlUsers() {
+        return ResponseData.<String>builder()
+                .status(HttpStatus.OK.value())
+                .message("Get successfully")
+                .data("Get all user")
+                .build();
     }
 }

@@ -36,7 +36,7 @@ public class UserRequestDto implements Serializable {
 
     @NotNull(message = "Date of birth must be not null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "MM/dd/yyyy")
+//    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dateOfBirth;
 
     @NotEmpty(message = "Permission is not empty")
