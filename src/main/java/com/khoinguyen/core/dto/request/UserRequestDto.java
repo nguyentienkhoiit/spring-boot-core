@@ -25,7 +25,7 @@ public class UserRequestDto implements Serializable {
     @NotBlank(message = "firstname is not blank")
     private String firstname;
 
-    @NotNull(message = "lastname is not blank")
+    @NotBlank(message = "lastname is not blank")
     private String lastname;
 
     @Email(message = "email is not format")
@@ -36,7 +36,7 @@ public class UserRequestDto implements Serializable {
 
     @NotNull(message = "Date of birth must be not null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-//    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dateOfBirth;
 
     @NotEmpty(message = "Permission is not empty")

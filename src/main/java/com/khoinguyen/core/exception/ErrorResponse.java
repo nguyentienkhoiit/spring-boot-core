@@ -2,13 +2,13 @@ package com.khoinguyen.core.exception;
 
 import java.util.Date;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorResponse {
     private String error;
     private String message;

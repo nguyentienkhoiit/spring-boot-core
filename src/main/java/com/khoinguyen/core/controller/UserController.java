@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseData<?> updateUser(@PathVariable int id, @RequestBody UserRequestDto requestDto) {
+    public ResponseData<?> updateUser(@PathVariable @Min(1) int id, @RequestBody UserRequestDto requestDto) {
         return ResponseData.<Void>builder()
                 .status(HttpStatus.ACCEPTED.value())
                 .message("User updated successfully")
